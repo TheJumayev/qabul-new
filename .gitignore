@@ -1,23 +1,45 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
-
-# testing
-/coverage
-
-# production
-/build
-
-# misc
-.DS_Store
+# === Node (React Frontend) ===
+node_modules/
+build/
+dist/
+.env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
-
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.vscode/
+
+# === Java (Spring Boot Backend) ===
+/target/
+/bin/
+/build/
+!.mvn/wrapper/maven-wrapper.jar
+.mvn/
+.mvn/wrapper/maven-wrapper.properties
+.gradle/
+.classpath
+.project
+.settings/
+.idea/
+*.iml
+*.log
+
+# === OS/System files ===
+.DS_Store
+Thumbs.db
+
+# === IntelliJ IDEA ===
+.idea/
+*.iws
+*.ipr
+*.iml
+out/
+
+# === Eclipse ===
+*.classpath
+*.project
+*.settings/
+
