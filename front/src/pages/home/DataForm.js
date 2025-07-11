@@ -7,9 +7,8 @@ import ApiCall, { baseUrl } from "../../config";
 import Zoom from "react-reveal/Zoom";
 import { CiPhone } from "react-icons/ci";
 import Select from "react-select";
-import pass from "./pass.png"
+import pass from "./passfront.png"
 import id from "./id.png"
-import oldid from "./oldid.png"
 
 function DataForm() {
   const [activeField, setActiveField] = useState("");
@@ -519,7 +518,7 @@ function DataForm() {
                                         <div className="text-center">
                                           <div className="inline-block bg-white p-2 rounded-lg shadow-md border border-gray-200">
                                             <img
-                                              src={oldid}
+                                              src={id}
                                               alt="ID karta"
                                               className="w-full max-w-[180px] h-auto object-contain"
                                             />
@@ -770,82 +769,6 @@ function DataForm() {
                           Mavjud ma'lumotlar
                         </h2>
                         <div className="space-y-4">
-                          {/* First Name */}
-                          <div className="flex items-center space-x-4">
-                            <svg
-                              className="w-5 h-5 text-gray-600"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                              />
-                            </svg>
-                            <p className={"my-1"}>
-                              <strong>FIO:</strong>{" "}
-                              {formData?.lastName || "Noma'lum"}{" "}
-                              {formData?.firstName || "Noma'lum"}{" "}
-                              {formData?.fatherName || ""}
-                            </p>
-                          </div>
-
-                          {/* Phone */}
-                          <div className="flex items-center space-x-4">
-                            <svg
-                              className="w-5 h-5 text-gray-600"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                              />
-                            </svg>
-                            <p className={"my-1"}>
-                              <strong>Telefon:</strong> {formData?.phone}
-                            </p>
-                          </div>
-
-                          {/* Region and District */}
-                          {formData?.district && (
-                            <div className="flex items-center space-x-4">
-                              <svg
-                                className="w-5 h-5 text-gray-600"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                                />
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                                />
-                              </svg>
-                              <p className={"my-1"}>
-                                <strong>Manzil:</strong>{" "}
-                                {formData?.district.region?.name || "Noma'lum"},{" "}
-                                {formData?.district?.name || "Noma'lum"}
-                              </p>
-                            </div>
-                          )}
-
                           {/* turi */}
                           <div className="flex items-center space-x-4">
                             <svg

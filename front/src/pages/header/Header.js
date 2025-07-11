@@ -3,8 +3,8 @@ import logo from "../../images/logoMain.png";
 
 function Header() {
   return (
-    <header className="bg-[#213972] fixed w-full z-50 shadow-2xl">
-      <div className="flex items-center justify-between py-2 px-20">
+    <header className="bg-[#213972] fixed w-full z-50 shadow-2xl py-2 px-6 md:px-14 xl:px-20">
+      <div className="flex items-center justify-between">
         <div className="flex items-center justify-center flex-shrink-0 z-10">
           <Link to="/" className="flex items-center no-underline">
             <img
@@ -12,8 +12,8 @@ function Header() {
               alt="Buxoro Xalqaro Universiteti logo"
               src={logo}
             />
-            <div className="ml-4">
-              <h5 className="mb-0 text-white text-xl font-semibold md:text-2xl leading-tight">
+            <div className="md:ml-4 ml-1">
+              <h5 className="mb-0 text-white text-base font-semibold md:text-2xl leading-tight">
                 BUXORO XALQARO <br /> UNIVERSITETI
               </h5>
             </div>
@@ -21,7 +21,7 @@ function Header() {
         </div>
 
         <div>
-          <h4 className="text-white">
+          <h4 className="text-white text-xs md:text-2xl">
             +998 55 309 99 99
           </h4>
         </div>

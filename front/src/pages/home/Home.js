@@ -2,17 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../header/Header";
 import "./home.css";
-import Footer from "../footer/Footer";
 import BgImage from "./BgImage";
 
-import { Modal } from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
-
 import ApiCall, { baseUrl } from "../../config/index";
-import logo from "./images/logo.png";
-import Litsenziya from "./Licensy";
-import Yonalishlar from "./Yonalishlar";
-import Directions from "./Directions";
 function Home(props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -54,14 +47,11 @@ function Home(props) {
   };
 
   return (
-    <div className="my-bg-second">
+    <div className="h-screen">
       <Header />
-      <div className="header-problem my-bg-second"></div>
-      <div className="pt-6 md:pt-20">
-        <BgImage />
-      </div>
-
+      <BgImage />
     </div>
+
   );
 }
 

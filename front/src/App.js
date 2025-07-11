@@ -7,6 +7,7 @@ import ApiCall from "./config/index";
 import Home from "./pages/home/Home";
 import PageNotFound from "./pages/404/404";
 import DataForm from "./pages/home/DataForm";
+import Kabinet from "./pages/home/Kabinet";
 import EducationTypeInstitute from "./pages/educationType/EducationTypeInstitute";
 import EducationExam from "./pages/educationExam/EducationExam";
 import EducationOffer from "./pages/educationOffer/EducationOffer";
@@ -47,6 +48,7 @@ import MyQRCode from "./admin/myPages/MyQRCode";
 import GoldCard from "./pages/goldCard/GoldCard";
 import QRCodeAgent from "./admin/agent/QRCodeAgent";
 import Settings from "./admin/myPages/Settings";
+import Directions from "./pages/home/Directions";
 function App() {
   const blockedPages = ["/dashboard", "/agent", "/admin"];
   const navigate = useNavigate();
@@ -85,7 +87,9 @@ function App() {
         <Route path={"/"} element={<Home />} />
         <Route path={"/:agentId"} element={<Home />} />
         <Route path={"/card/:cardId"} element={<GoldCard />} />
-        <Route path={"/data-form"} element={<DataForm />} />
+        <Route path={"/user-info"} element={<Directions />} />
+        <Route path={"/user-info/data-form"} element={<DataForm />} />
+        <Route path={"/user-info/data-form/kabinet"} element={<Kabinet />} />
         <Route path={"/test"} element={<TestAbuturient />} />
         <Route path={"/education-type"} element={<EducationTypeInstitute />} />
         <Route path={"/education-exam"} element={<EducationExam />} />
