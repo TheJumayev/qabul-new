@@ -135,13 +135,15 @@ public class AbuturientController {
         return ResponseEntity.ok(abuturient);
     }
 
-    @PutMapping("data-form")
+    @PutMapping("/data-form")
     public HttpEntity<?> updateAbuturientDataForm(@RequestBody AbuturientDTO request) {
         System.out.println(request);
         Abuturient abuturient = abuturientRepo.findByPhone(request.getPhone());
+        System.out.println(abuturient);
         if (Objects.isNull(abuturient)) {
             return ResponseEntity.ok(null);
         }
+        System.out.println(abuturient);
         if (abuturient.getStatus() == 1) {
             abuturient.setStatus(2);
             abuturient.setAppealType(appealTypeRepo.findById(request.getAppealTypeId()).orElseThrow());

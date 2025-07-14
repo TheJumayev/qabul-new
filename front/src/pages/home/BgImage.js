@@ -7,9 +7,9 @@ import { FaTelegramPlane, FaFacebookF, FaYoutube, FaInstagram, FaGlobe } from "r
 function BgImage(props) {
   const { agentId } = useParams();
   const [open, setOpen] = useState(false);
-  const [tel, setTel] = useState(""); // Phone number state
-  const [success, setSuccess] = useState(false); // Submission success state
-  const [message, setMessage] = useState(""); // Success/error message
+  const [tel, setTel] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
   const handleClose = () => setOpen(false);
@@ -28,10 +28,58 @@ function BgImage(props) {
       setTel("+998");
     }
   };
+
+  const getPhoneData = async (phone) => {
+    try {
+      // (1) HISTORY so‘rovi (agar POST bo‘lsa)
+      await ApiCall(
+        `/api/v1/history-of-abuturient/${phone}`,
+        "POST",
+        null,
+        null,
+        true
+      );
+    } catch (error) {
+      console.error("Error fetching history data:", error);
+    }
+
+    if (!phone || phone === "" || phone === null || phone === undefined) {
+      navigate("/");
+    } else {
+      try {
+        // (2) ABUTURIENT status tekshir
+        const response = await ApiCall(
+          `/api/v1/abuturient/${phone}`,
+          "GET",
+          null,
+          null,
+          true
+        );
+
+        if (response.data === null || response.data === undefined) {
+          navigate("/");
+        } else if (response.data.status == 0) {
+          navigate("/user-info", { state: { phone: phone } });
+        } else if (response.data.status == 1) {
+          navigate("/data-form", { state: { phone: phone } });
+        } else if (response.data.status == 2) {
+          navigate("/kabinet", { state: { phone: phone } });
+        } else if (response.data.status == 3 || response.data.status == 4) {
+          navigate("/result", { state: { phone: phone } });
+        } else {
+          navigate("/");
+        }
+      } catch (error) {
+        console.error("Error fetching abuturient data:", error);
+      }
+    }
+  };
+
+
+
   const handleSave = async (e) => {
     e.preventDefault();
 
-    // Validate the phone number format
     const phoneRegex = /^\+998\d{9}$/;
     if (!phoneRegex.test(tel)) {
       setMessage("Telefon raqami noto'g'ri formatda!");
@@ -43,42 +91,33 @@ function BgImage(props) {
       phone: tel,
       agentId: agentId,
     };
+    console.log(obj);
 
-    if (!tel || tel == "" || tel == null || tel == undefined) {
-      navigate("/");
-    } else {
-      try {
-        const response = await ApiCall(
-          `/api/v1/abuturient`,
-          "POST",
-          obj,
-          null,
-          true
-        );
-        setSuccess(true);
-        console.log("Response:", response === undefined);
-        
-        if (response.data === null || response === undefined) {
-          navigate("/");
-        } else if (response.data.status == 0) {
-          navigate("/user-info", { state: { phone: tel } });
-        } else if (response.data.status == 1) {
-          navigate("/data-form", { state: { phone: tel } });
-        } else if (response.data.status == 2) {
-          navigate("/kabinet", { state: { phone: tel } });
-        } else if (response.data.status == 3 || response.data.status == 4) {
-          navigate("/result", { state: { phone: tel } })
-        } else {
-          navigate("/");
-        }
-      } catch (error) {
-        console.error("Error saving data:", error);
-        setSuccess(false);
+    try {
+      const response = await ApiCall(
+        `/api/v1/abuturient`,
+        "POST",
+        obj,
+        null,
+        true
+      );
+        // POST success bo‘lsa, keyin tekshiruvchi funksiya chaqiramiz
+      await getPhoneData(tel);
+
+      setSuccess(true);
+    } catch (error) {
+      console.error("Error saving data:", error);
+      if (error.response && error.response.data && error.response.data.message) {
+        setMessage(error.response.data.message);
+      } else {
         setMessage("Xatolik yuz berdi.");
-        setOpen(true);
       }
+      setOpen(true);
+      setSuccess(false);
     }
   };
+
+
   return (
     <div className="bg-[#F6F6F6] h-screen">
       <div className="flex pt-12 md:pt-28 justify-center">

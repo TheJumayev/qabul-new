@@ -38,8 +38,8 @@ function TestAbiturient() {
         subject5: [],
     });
     const [canSubmit, setCanSubmit] = useState(false);
-    // const phone = location.state?.phone || "";
-    const phone = "+998900829474";
+    const phone = location.state?.phone || "";
+    // const phone = "+998900829474";
 
 
     useEffect(() => {

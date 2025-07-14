@@ -29,11 +29,55 @@ function Kabinet() {
   });
   useEffect(() => {
     fetchAbuturientData();
+    getPhoneData();
   }, []);
+  const getPhoneData = async () => {
+    try {
+      const response = await ApiCall(
+        `/api/v1/history-of-abuturient/${phone}`,
+        "POST",
+        null,
+        null,
+        true
+      );
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+    if (!phone || phone === "" || phone === null || phone === undefined) {
+      navigate("/");
+    } else
+      try {
+        const response = await ApiCall(
+          `/api/v1/abuturient/${phone}`,
+          "GET",
+          null,
+          null,
+          true
+        );
+
+        if (response.data === null || response.data === undefined) {
+          navigate("/");
+        } else if (response.data.status == 0) {
+          navigate("/user-info", { state: { phone: phone } });
+        } else if (response.data.status == 1) {
+          navigate("/data-form", { state: { phone: phone } });
+        } else if (response.data.status == 2) {
+          navigate("/cabinet", { state: { phone: phone } });
+        } else if (response.data.status == 3 || response.data.status == 4) {
+          navigate("/result", { state: { phone: phone } })
+        } else {
+          navigate("/");
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+  };
+
+
   const fetchAbuturientData = async () => {
-    let phone = "+998465465465"
     try {
       const response = await ApiCall(`/api/v1/abuturient/${phone}`, "GET", null, null, true);
+      console.log("Abuturient data:", response.data);
       if (response.data) {
         setAbuturient(response.data);
       } else {
@@ -158,7 +202,7 @@ function Kabinet() {
                 <button
                   type="button"
                   className="bg-[#213972] text-white py-2 px-4 rounded-lg transition duration-300"
-                  onClick={() => navigate("/test")}
+                  onClick={() => navigate("/test", { state: { phone: phone } })}
                 >
                   Davom etish
                 </button>

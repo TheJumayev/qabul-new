@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../header/Header";
-import Footer from "../footer/Footer";
-import bg from "./images/back.jpg";
 import ApiCall, { baseUrl } from "../../config";
-import Zoom from "react-reveal/Zoom";
-import { CiPhone } from "react-icons/ci";
 import Select from "react-select";
-import pass from "./passfront.png"
-import id from "./id.png"
 import { FaTelegramPlane, FaFacebookF, FaYoutube, FaInstagram, FaGlobe } from "react-icons/fa";
 
 function DataForm() {
@@ -19,9 +13,8 @@ function DataForm() {
   const [educationType, setEducationType] = useState([]);
   const [educationForm, setEducationForm] = useState([]);
   const [educationField, setEducationField] = useState([]);
-  const abuturientData = location.state?.abuturientData;
   const [abuturient, setAbuturient] = useState({
-    ...abuturientData, // oldingi ma'lumotlar
+    phone: phone,
     language: true,
     appealTypeId: "",
     educationTypeId: "",
@@ -29,15 +22,6 @@ function DataForm() {
     educationFieldId: "",
     createdAt: new Date().toISOString(),
   });
-
-  useEffect(() => {
-    if (abuturientData) {
-      setAbuturient(prev => ({
-        ...prev,
-        ...abuturientData
-      }));
-    }
-  }, [abuturientData]);
 
   useEffect(() => {
     getPhoneData();
@@ -75,9 +59,9 @@ function DataForm() {
         } else if (response.data.status == 1) {
           navigate("/data-form", { state: { phone: phone } });
         } else if (response.data.status == 2) {
-          navigate("/kabinet", { state: { phone: phone } });
+          navigate("/cabinet", { state: { phone: phone } });
         } else if (response.data.status == 3 || response.data.status == 4) {
-          navigate("/result", { state: { phone: phone } })
+          navigate("/test", { state: { phone: phone } })
         } else {
           navigate("/");
         }
@@ -194,7 +178,7 @@ function DataForm() {
       alert("Xatolik yuz berdi. Ma'lumotni saqlashning iloji bo'lmadi.");
     }
 
-    navigate("/kabinet");
+    navigate("/cabinet", { state: { phone: phone } });
   }
   const handleSelectChange = (selectedOption, { name }) => {
     setAbuturient({ ...abuturient, [name]: selectedOption.value });

@@ -12,6 +12,7 @@ function Directions() {
   const navigate = useNavigate();
   const location = useLocation();
   const phone = location.state?.phone || "";
+  // console.log(phone);
   const [regions, setRegions] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [loadingDistricts, setLoadingDistricts] = useState(false);
@@ -56,7 +57,7 @@ function Directions() {
         } else if (response.data.status == 1) {
           navigate("/data-form", { state: { phone: phone } });
         } else if (response.data.status == 2) {
-          navigate("/kabinet", { state: { phone: phone } });
+          navigate("/cabinet", { state: { phone: phone } });
         } else if (response.data.status == 3 || response.data.status == 4) {
           navigate("/result", { state: { phone: phone } })
         } else {
@@ -123,7 +124,6 @@ function Directions() {
       alert("Iltimos, barcha maydonlarni to'ldiring!");
       return;
     }
-    console.log("Abuturient ma'lumotlari:", abuturient);
 
     try {
       await ApiCall(
