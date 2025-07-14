@@ -59,7 +59,7 @@ function Directions() {
         } else if (response.data.status == 2) {
           navigate("/cabinet", { state: { phone: phone } });
         } else if (response.data.status == 3 || response.data.status == 4) {
-          navigate("/result", { state: { phone: phone } })
+          navigate("/test", { state: { phone: phone } })
         } else {
           navigate("/");
         }
@@ -68,7 +68,6 @@ function Directions() {
       }
   };
   useEffect(() => {
-    getPhoneData();
     fetchRegions();
   }, []);
 
@@ -133,6 +132,7 @@ function Directions() {
         null,
         true
       );
+      getPhoneData();
       navigate("/data-form", { state: phone });
     } catch (error) {
       console.error("Error saving data:", error);

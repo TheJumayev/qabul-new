@@ -24,7 +24,6 @@ function DataForm() {
   });
 
   useEffect(() => {
-    getPhoneData();
     getAppealType();
     getEducationType()
   }, []);
@@ -173,6 +172,9 @@ function DataForm() {
         null,
         true
       );
+      console.log(abuturient);
+
+      getPhoneData();
     } catch (error) {
       console.error("Error saving data:", error);
       alert("Xatolik yuz berdi. Ma'lumotni saqlashning iloji bo'lmadi.");

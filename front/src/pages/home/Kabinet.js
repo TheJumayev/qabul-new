@@ -64,7 +64,7 @@ function Kabinet() {
         } else if (response.data.status == 2) {
           navigate("/cabinet", { state: { phone: phone } });
         } else if (response.data.status == 3 || response.data.status == 4) {
-          navigate("/result", { state: { phone: phone } })
+          navigate("/test", { state: { phone: phone } })
         } else {
           navigate("/");
         }
@@ -77,7 +77,7 @@ function Kabinet() {
   const fetchAbuturientData = async () => {
     try {
       const response = await ApiCall(`/api/v1/abuturient/${phone}`, "GET", null, null, true);
-      console.log("Abuturient data:", response.data);
+      // console.log("Abuturient data:", response.data);
       if (response.data) {
         setAbuturient(response.data);
       } else {

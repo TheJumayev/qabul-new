@@ -63,9 +63,9 @@ function BgImage(props) {
         } else if (response.data.status == 1) {
           navigate("/data-form", { state: { phone: phone } });
         } else if (response.data.status == 2) {
-          navigate("/kabinet", { state: { phone: phone } });
+          navigate("/cabinet", { state: { phone: phone } });
         } else if (response.data.status == 3 || response.data.status == 4) {
-          navigate("/result", { state: { phone: phone } });
+          navigate("/test", { state: { phone: phone } });
         } else {
           navigate("/");
         }
@@ -91,8 +91,6 @@ function BgImage(props) {
       phone: tel,
       agentId: agentId,
     };
-    console.log(obj);
-
     try {
       const response = await ApiCall(
         `/api/v1/abuturient`,
@@ -101,7 +99,7 @@ function BgImage(props) {
         null,
         true
       );
-        // POST success bo‘lsa, keyin tekshiruvchi funksiya chaqiramiz
+      // POST success bo‘lsa, keyin tekshiruvchi funksiya chaqiramiz
       await getPhoneData(tel);
 
       setSuccess(true);

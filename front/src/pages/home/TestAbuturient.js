@@ -14,7 +14,7 @@ import {
     FaPhoneAlt,
     FaMapMarkerAlt,
 } from "react-icons/fa";
-import bg11 from "./bgImage/2.jpg"
+
 function TestAbiturient() {
     const navigate = useNavigate();
     const [showTest, setShowTest] = useState(true);
@@ -102,7 +102,6 @@ function TestAbiturient() {
                 navigate("/");
             } else if (response.data) {
                 setTotalScore(response.data?.score);
-
                 if (response.data?.score < 57) {
                     setFailed(true)
                 }
@@ -113,10 +112,12 @@ function TestAbiturient() {
     };
 
     const fetchTestData = async () => {
-
         try {
             const response = await ApiCall(`/api/v1/test/${phone}`, "GET", null, null, true);
+            console.log("Test data response:", response.data);
+            
             if (response.data) {
+
                 if (response.data.subject5.length === 0 || response.data.subject5.length === 0) {
                     setIjodiy(true)
                 }
