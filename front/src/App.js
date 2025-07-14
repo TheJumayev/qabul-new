@@ -8,6 +8,7 @@ import Home from "./pages/home/Home";
 import PageNotFound from "./pages/404/404";
 import DataForm from "./pages/home/DataForm";
 import Kabinet from "./pages/home/Kabinet";
+import Result from "./pages/home/Result";
 import EducationTypeInstitute from "./pages/educationType/EducationTypeInstitute";
 import EducationExam from "./pages/educationExam/EducationExam";
 import EducationOffer from "./pages/educationOffer/EducationOffer";
@@ -84,13 +85,14 @@ function App() {
   return (
     <div>
       <Routes>
-        <Route path={"/"} element={<Home />} />
         <Route path={"/:agentId"} element={<Home />} />
+        <Route path={"/"} element={<Home />} />
         <Route path={"/card/:cardId"} element={<GoldCard />} />
         <Route path={"/user-info"} element={<Directions />} />
-        <Route path={"/user-info/data-form"} element={<DataForm />} />
-        <Route path={"/user-info/data-form/kabinet"} element={<Kabinet />} />
+        <Route path={"/data-form"} element={<DataForm />} />
+        <Route path={"/cabinet"} element={<Kabinet />} />
         <Route path={"/test"} element={<TestAbuturient />} />
+        <Route path={"/result"} element={<Result />} />
         <Route path={"/education-type"} element={<EducationTypeInstitute />} />
         <Route path={"/education-exam"} element={<EducationExam />} />
         <Route path={"/education-offer"} element={<EducationOffer />} />

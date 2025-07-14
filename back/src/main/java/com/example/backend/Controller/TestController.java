@@ -34,7 +34,7 @@ public class TestController {
     @GetMapping("/add/update")
     public HttpEntity<?> addOrUpdateTests() {
 //        String filePath = System.getProperty("user.home") + "/Downloads/test.xlsx";
-        String filePath =  "./test.xlsx";
+        String filePath = "./test.xlsx";
 
         try (FileInputStream fileInputStream = new FileInputStream(filePath)) {
             Workbook workbook = new XSSFWorkbook(fileInputStream);
@@ -141,9 +141,9 @@ public class TestController {
         testScoreRepo.save(testScore);
         abiturient.setStatus(3);
         abiturient.setBall(testScoreDTO.getShowScore());
-        if(abiturient.getEducationField().getIjodiy()){
+        if (abiturient.getEducationField().getIjodiy()) {
             abiturient.setGetContract(false);
-        }else {
+        } else {
             abiturient.setGetContract(true);
         }
         abuturientRepo.save(abiturient);

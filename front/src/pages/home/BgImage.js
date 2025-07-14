@@ -1,6 +1,6 @@
-import React, { useState } from "react";
 import "react-responsive-modal/styles.css";
 import ApiCall from "../../config";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaTelegramPlane, FaFacebookF, FaYoutube, FaInstagram, FaGlobe } from "react-icons/fa";
 
@@ -10,9 +10,6 @@ function BgImage(props) {
   const [tel, setTel] = useState(""); // Phone number state
   const [success, setSuccess] = useState(false); // Submission success state
   const [message, setMessage] = useState(""); // Success/error message
-  const [showForm, setShowForm] = useState(true);
-  const [formData, setFormData] = useState(null);
-
   const navigate = useNavigate();
 
   const handleClose = () => setOpen(false);
@@ -31,7 +28,6 @@ function BgImage(props) {
       setTel("+998");
     }
   };
-
   const handleSave = async (e) => {
     e.preventDefault();
 
@@ -48,35 +44,41 @@ function BgImage(props) {
       agentId: agentId,
     };
 
-    try {
-      const response = await ApiCall(
-        `/api/v1/abuturient`,
-        "POST",
-        obj,
-        null,
-        true
-      );
-      setSuccess(true);
-      if (response.data === null) {
-        setShowForm(true);
-        navigate("/data-form", { state: { phone: tel } });
-      } else if (response.data.status == 0) {
-        setShowForm(true);
-        setFormData(response.data);
-        navigate("/data-form", { state: { phone: tel } });
-      } else if (response.data) {
-        setFormData(response.data);
-        setShowForm(false);
-        navigate("/user-info/data-form/kabinet", { state: { phone: tel } });
+    if (!tel || tel == "" || tel == null || tel == undefined) {
+      navigate("/");
+    } else {
+      try {
+        const response = await ApiCall(
+          `/api/v1/abuturient`,
+          "POST",
+          obj,
+          null,
+          true
+        );
+        setSuccess(true);
+        console.log("Response:", response === undefined);
+        
+        if (response.data === null || response === undefined) {
+          navigate("/");
+        } else if (response.data.status == 0) {
+          navigate("/user-info", { state: { phone: tel } });
+        } else if (response.data.status == 1) {
+          navigate("/data-form", { state: { phone: tel } });
+        } else if (response.data.status == 2) {
+          navigate("/kabinet", { state: { phone: tel } });
+        } else if (response.data.status == 3 || response.data.status == 4) {
+          navigate("/result", { state: { phone: tel } })
+        } else {
+          navigate("/");
+        }
+      } catch (error) {
+        console.error("Error saving data:", error);
+        setSuccess(false);
+        setMessage("Xatolik yuz berdi.");
+        setOpen(true);
       }
-    } catch (error) {
-      console.error("Error saving data:", error);
-      setSuccess(false);
-      setMessage("Xatolik yuz berdi.");
-      setOpen(true);
     }
   };
-
   return (
     <div className="bg-[#F6F6F6] h-screen">
       <div className="flex pt-12 md:pt-28 justify-center">

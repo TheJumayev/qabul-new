@@ -105,6 +105,59 @@ public class AbuturientController {
         return randomPathNumber;
     }
 
+    @PutMapping("/user-info")
+    public HttpEntity<?> updateAbuturientUserInfo(@RequestBody AbuturientDTO request) {
+        System.out.println(request);
+        Abuturient abuturient = abuturientRepo.findByPhone(request.getPhone());
+        if (Objects.isNull(abuturient)) {
+            return ResponseEntity.ok(null);
+        }
+        if (abuturient.getStatus() == 0) {
+            District district = null;
+            Optional<District> byId = districtRepo.findById(request.getDistrictId());
+            if (byId.isPresent()) {
+                district = byId.get();
+            }
+            abuturient.setStatus(1);
+            abuturient.setFirstName(request.getFirstName());
+            abuturient.setLastName(request.getLastName());
+            abuturient.setPhone(request.getPhone());
+            abuturient.setFatherName(request.getFatherName());
+            abuturient.setPassportNumber(request.getPassportNumber());
+            abuturient.setPassportPin(request.getPassportPin());
+            if (request.getLevel() != null) {
+                abuturient.setLevel(abuturient.getLevel());
+            }
+            abuturient.setDistrict(district);
+
+            abuturientRepo.save(abuturient);
+        }
+        return ResponseEntity.ok(abuturient);
+    }
+
+    @PutMapping("data-form")
+    public HttpEntity<?> updateAbuturientDataForm(@RequestBody AbuturientDTO request) {
+        System.out.println(request);
+        Abuturient abuturient = abuturientRepo.findByPhone(request.getPhone());
+        if (Objects.isNull(abuturient)) {
+            return ResponseEntity.ok(null);
+        }
+        if (abuturient.getStatus() == 1) {
+            abuturient.setStatus(2);
+            abuturient.setAppealType(appealTypeRepo.findById(request.getAppealTypeId()).orElseThrow());
+            abuturient.setEducationField(educationFieldRepo.findById(request.getEducationFieldId()).orElseThrow());
+            abuturient.setEnrolledAt(LocalDateTime.now());
+            if (request.getLevel() != null) {
+                abuturient.setLevel(abuturient.getLevel());
+            }
+            abuturientRepo.save(abuturient);
+        }
+        return ResponseEntity.ok(abuturient);
+    }
+
+
+
+
     @PutMapping
     public HttpEntity<?> updateAbuturient(@RequestBody AbuturientDTO request) {
         System.out.println(request);
@@ -118,7 +171,7 @@ public class AbuturientController {
             if (byId.isPresent()) {
                 district = byId.get();
             }
-            abuturient.setStatus(1);
+            abuturient.setStatus(request.getStatus()+1);
             abuturient.setFirstName(request.getFirstName());
             abuturient.setLastName(request.getLastName());
             abuturient.setPhone(request.getPhone());
