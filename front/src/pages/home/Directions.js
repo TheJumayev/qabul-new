@@ -27,29 +27,26 @@ function Directions() {
     passportNumber: "",
     passportPin: "",
   });
-  const getPhoneData = async () => {
-    try {
-      const response = await ApiCall(
-        `/api/v1/history-of-abuturient/${phone}`,
-        "POST",
-        null,
-        null,
-        true
-      );
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
+  const getPhoneData = async (response) => {
+    // try {
+    //   const response = await ApiCall(
+    //     `/api/v1/history-of-abuturient/${phone}`,
+    //     "POST",
+    //     null,
+    //     null,
+    //     true
+    //   );
+    //   console.log(response);
+
+    // } catch (error) {
+    //   console.error("Error fetching data:", error);
+    // }
     if (!phone || phone === "" || phone === null || phone === undefined) {
       navigate("/");
     } else
       try {
-        const response = await ApiCall(
-          `/api/v1/abuturient/${phone}`,
-          "GET",
-          null,
-          null,
-          true
-        );
+
+
         if (response.data === null || response.data === undefined) {
           navigate("/");
         } else if (response.data.status == 0) {
@@ -125,18 +122,17 @@ function Directions() {
     }
 
     try {
-      await ApiCall(
+      const response = await ApiCall(
         `/api/v1/abuturient/user-info`,
         "PUT",
         abuturient,
         null,
         true
       );
-      getPhoneData();
-      navigate("/data-form", { state: phone });
+      getPhoneData(response);
+      // navigate("/data-form", { state: phone });
     } catch (error) {
-      console.error("Error saving data:", error);
-      alert("Xatolik yuz berdi. Ma'lumotni saqlashning iloji bo'lmadi.");
+      alert(error.response?.data?.message || "Xatolik yuz berdi. Ma'lumotni saqlashning iloji bo'lmadi.");
     }
   };
 

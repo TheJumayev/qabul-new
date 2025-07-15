@@ -78,12 +78,19 @@ function TestAbiturient() {
                 navigate("/");
             } else if (response.data) {
                 setFormData(response.data);
+                if (response.data.appealType.id == 2) {
+                    setShowTest(false);
+                    setIjodiy(true);
+                }
                 if (response.data.status >= 3) {
+
                     setShowTest(false);
                     getScore();
                 } else {
+
                     const savedTest = localStorage.getItem("testData");
                     if (savedTest) {
+
                         setSubjects(JSON.parse(savedTest));
                     } else {
                         fetchTestData();
@@ -114,12 +121,15 @@ function TestAbiturient() {
     const fetchTestData = async () => {
         try {
             const response = await ApiCall(`/api/v1/test/${phone}`, "GET", null, null, true);
-            console.log("Test data response:", response.data);
-            
+            if (response === null || response === undefined || response.data === null || response.data === undefined) {
+                showTest(false);
+                setIjodiy(true);
+            }
             if (response.data) {
-
                 if (response.data.subject5.length === 0 || response.data.subject5.length === 0) {
+                    setShowTest(false);
                     setIjodiy(true)
+                    return;
                 }
                 const subjectsData = {
                     subject1: response.data.subject1 || [],
@@ -141,6 +151,8 @@ function TestAbiturient() {
                 navigate("/");
             }
         } catch (error) {
+            setShowTest(false);
+            setIjodiy(true);
             console.error("Error fetching test data:", error);
         }
     };
@@ -322,7 +334,7 @@ function TestAbiturient() {
                                                                     {globalIndex}-savol /
                                                                 </span>
                                                                 <span className="font-semibold text-[#737373] text-xs lg:text-lg">
-                                                                    {question.testSubject.name?.includes("_0") ? "1-bloc" : "2-bloc"} / {question.testSubject.description}
+                                                                    {question.testSubject.name?.includes("_0") ? "1-blok" : "2-blok"} / {question.testSubject.description}
                                                                 </span>
                                                                 <p className="text-base text-[#000000] lg:text-xl font-medium">
                                                                     {question.question}
@@ -367,8 +379,8 @@ function TestAbiturient() {
                                                 .flat()
                                                 .reduce((acc, question, index) => {
                                                     const blocLabel = question.testSubject.name?.includes("_0")
-                                                        ? "1-bloc / " + question.testSubject.description
-                                                        : "2-bloc / " + question.testSubject.description;
+                                                        ? "1-blok / " + question.testSubject.description
+                                                        : "2-blok / " + question.testSubject.description;
 
                                                     const lastGroup = acc[acc.length - 1];
 
@@ -390,8 +402,6 @@ function TestAbiturient() {
                   text-center p-2 rounded-xl cursor-pointer`}
                                                                     onClick={() => {
                                                                         const el = document.getElementById(`question-${q.id}`);
-                                                                        console.log(`question-${q.id}`);
-
                                                                         if (el) el.scrollIntoView({ behavior: "smooth" });
                                                                     }}
                                                                 >
@@ -419,13 +429,13 @@ function TestAbiturient() {
                         </div>
                     </div>
                 ) : (
-                    (failed && !ijodiy) ?
+                    (failed && formData.ball < 56) ?
                         <div className={"pt-20 lg:pt-32 bg-[#F6F6F6] text-center"}>
                             <Zoom>
                                 <div className={"px-4 m-4 mt-0 bg-cover  "}
                                 >
                                     <h3 className={"text-[#213972] xl:text-3xl md:text-xl sm:text-sm"}>Siz testdan yetarli balni to'play olmadingiz. </h3>
-                                    <h3 className={"text-[#213972] xl:text-3xl md:text-xl sm:text-sm"}> Sizning to'plagan balingiz: <span className={"text-3xl text-black"}>{Number((parseFloat(totalScore) || 0).toFixed(1))}</span></h3>
+                                    <h3 className={"text-[#213972] xl:text-3xl md:text-xl sm:text-sm"}> Sizning to'plagan balingiz: {formData.ball} </h3>
                                     <div>
                                         <button
                                             onClick={() => {
@@ -538,12 +548,28 @@ function TestAbiturient() {
                             <Zoom>
                                 <div className={""}>
                                     {ijodiy ? (
-                                        <div className={"pt-20 lg:pt-32 bg-[#F6F6F6] text-center"}>
-                                            <h3 className={"text-white xl:text-3xl md:text-xl sm:text-sm"}>Ijodiy imtihonni topshirish uchun siz institutga markaziy binosiga tashrif buyurishingiz so'raladi.  </h3>
-                                            <h3 className={"text-white xl:text-3xl md:text-xl sm:text-sm"}>  Sizning balingiz <span className={"text-3xl text-black"}>Number((parseFloat(totalScore) || 0).toFixed(1))</span></h3>
-                                            <h4 className={"text-white xl:text-3xl md:text-xl sm:text-sm"}>Manzil: Buxoro shahri Sitorayi Mohi-Xosa MFY G'ijduvon ko'chasi 250-uy</h4>
-                                            <div className='flex-1 min-w-[250px] border-r pr-4'>
-                                                <div className="w-[950px] overflow-hidden rounded-xl border-2 border-[#213972]">
+                                        <div className={"pt-4 bg-[#F6F6F6] text-center"}>
+
+                                            <div className={"pt-20 lg:pt-32 bg-[#F6F6F6] text-center mx-auto max-w-4xl"}>
+                                                <h3 className={"font-semibold text-4xl text-[#213972] lg:text-5xl"}>Ijodiy imtihonni topshirish uchun siz institutga markaziy binosiga tashrif buyurishingiz so'raladi.</h3>
+                                                <h3 className={"font-semibold text-[#213972] text-base lg:text-2xl mb-4"}>Manzil: Buxoro shahri Sitorayi Mohi-Xosa MFY G'ijduvon ko'chasi 250-uy</h3>
+                                                {formData.ball > 56 && (
+                                                    <div className="mb-2 bg-white mx-4 py-4 lg:py-10  lg:p-5 rounded-xl">
+                                                        <img src={check} alt="Check" className="w-24 h-24 mx-auto mb-4" />
+                                                        <h3 className={"font-semibold text-xl text-[#213972] lg:text-3xl"}> Sizning to'plagan balingiz: {formData.ball}</h3>
+                                                        <div className="px-4">
+                                                            <button
+                                                                onClick={handleDownloadPDF}
+                                                                className="w-full flex items-center mt-8 justify-between gap-2 text-[#256DF6] font-semibold border-2 border-[#256DF6] rounded-md p-2 bg-[#004CFF0D]"
+                                                            >
+                                                                <span className="text-sm lg:text-xl">Shartnoma yuklab olish</span>
+                                                                <span className="text-base lg:text-2xl"><FaDownload /></span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                                <h3 className="text-2xl font-medium text-[#154476] lg:text-4xl my-4">Buxoro Xalqaro Universiteti manzili</h3>
+                                                <div className="mx-auto w-[320px] lg:w-[950px]  overflow-hidden rounded-xl border-2 border-[#213972]">
                                                     <iframe
                                                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3064.8958577959097!2d64.42846967583635!3d39.80932777154381!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3f5009003f1c477b%3A0x920d498788a13e58!2sBuxoro%20psixologiya%20va%20xorijiy%20tillar%20instituti!5e0!3m2!1sru!2s!4v1728054121217!5m2!1sru!2s"
                                                         allowFullScreen
@@ -552,61 +578,61 @@ function TestAbiturient() {
                                                         referrerPolicy="no-referrer-when-downgrade"
                                                     ></iframe>
                                                 </div>
-                                            </div>
-                                            {/* Footer */}
-                                            <div className="bg-[#213972] rounded-2xl p-6 xl:p-8 shadow-lg mx-20">
-                                                <div className="flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0 ">
-                                                    {/* Logo */}
-                                                    <div className="flex-shrink-0">
-                                                        <a
-                                                            href="/"
-                                                            className="flex items-center gap-2 hover:scale-105 transition duration-300"
-                                                        >
-                                                            <img
-                                                                src={logo}
-                                                                alt="Logo"
-                                                                className="lg:w-[80px] lg:h-[80px] w-[70px] h-[70px]"
-                                                            />
-                                                            <span className="text-white lg:text-2xl text-base no-underline text-left">
-                                                                Buxoro Xalqaro <br /> Universiteti
-                                                            </span>
-                                                        </a>
-                                                    </div>
+                                                {/* Footer */}
+                                                <div className="bg-[#213972] rounded-2xl p-6 xl:p-8 shadow-lg mx-4 mt-6 lg:mx-20">
+                                                    <div className="flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0 ">
+                                                        {/* Logo */}
+                                                        <div className="flex-shrink-0">
+                                                            <a
+                                                                href="/"
+                                                                className="flex items-center gap-2 hover:scale-105 transition duration-300"
+                                                            >
+                                                                <img
+                                                                    src={logo}
+                                                                    alt="Logo"
+                                                                    className="lg:w-[80px] lg:h-[80px] w-[70px] h-[70px]"
+                                                                />
+                                                                <span className="text-white lg:text-2xl text-base no-underline text-left">
+                                                                    Buxoro Xalqaro <br /> Universiteti
+                                                                </span>
+                                                            </a>
+                                                        </div>
 
-                                                    {/* Phone Number */}
-                                                    <div className="flex items-center bg-white/10 backdrop-blur-sm rounded-full px-6 py-3">
-                                                        <FaPhoneAlt className="text-white mr-3 text-lg" />
-                                                        <a
-                                                            href="tel:+998553099999"
-                                                            className="text-white hover:text-gray-200 text-lg md:text-xl font-semibold transition-colors"
-                                                        >
-                                                            +998 (55) 309-99-99
-                                                        </a>
-                                                    </div>
+                                                        {/* Phone Number */}
+                                                        <div className="flex items-center bg-white/10 backdrop-blur-sm rounded-full px-6 py-3">
+                                                            <FaPhoneAlt className="text-white mr-3 text-lg" />
+                                                            <a
+                                                                href="tel:+998553099999"
+                                                                className="text-white hover:text-gray-200 text-lg md:text-xl font-semibold transition-colors"
+                                                            >
+                                                                +998 (55) 309-99-99
+                                                            </a>
+                                                        </div>
 
-                                                    {/* Social Icons */}
-                                                    <div className="flex space-x-4">
-                                                        <a
-                                                            href="https://www.instagram.com/bxu.uz?igsh=bHQ3YmRvajR1aXYy"
-                                                            className="bg-white/10 hover:bg-white/20 p-3 rounded-full transition-colors"
-                                                            aria-label="Instagram"
-                                                        >
-                                                            <FaInstagram className="text-white text-2xl" />
-                                                        </a>
-                                                        <a
-                                                            href="https://t.me/bxu_uz"
-                                                            className="bg-white/10 hover:bg-white/20 p-3 rounded-full transition-colors"
-                                                            aria-label="Telegram"
-                                                        >
-                                                            <FaTelegram className="text-white text-2xl" />
-                                                        </a>
-                                                        <a
-                                                            href=""
-                                                            className="bg-white/10 hover:bg-white/20 p-3 rounded-full transition-colors"
-                                                            aria-label="YouTube"
-                                                        >
-                                                            <FaYoutube className="text-white text-2xl" />
-                                                        </a>
+                                                        {/* Social Icons */}
+                                                        <div className="flex space-x-4">
+                                                            <a
+                                                                href="https://www.instagram.com/bxu.uz?igsh=bHQ3YmRvajR1aXYy"
+                                                                className="bg-white/10 hover:bg-white/20 p-3 rounded-full transition-colors"
+                                                                aria-label="Instagram"
+                                                            >
+                                                                <FaInstagram className="text-white text-2xl" />
+                                                            </a>
+                                                            <a
+                                                                href="https://t.me/bxu_uz"
+                                                                className="bg-white/10 hover:bg-white/20 p-3 rounded-full transition-colors"
+                                                                aria-label="Telegram"
+                                                            >
+                                                                <FaTelegram className="text-white text-2xl" />
+                                                            </a>
+                                                            <a
+                                                                href=""
+                                                                className="bg-white/10 hover:bg-white/20 p-3 rounded-full transition-colors"
+                                                                aria-label="YouTube"
+                                                            >
+                                                                <FaYoutube className="text-white text-2xl" />
+                                                            </a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -621,7 +647,7 @@ function TestAbiturient() {
                                                     ko'rishimizdan xursand bo'lamiz.</h3>
                                                 <div className="mb-2 bg-white mx-4 py-4 lg:py-10  lg:p-5 rounded-xl">
                                                     <img src={check} alt="Check" className="w-24 h-24 mx-auto mb-4" />
-                                                    <h3 className={"font-semibold text-xl text-[#213972] lg:text-3xl"}> Sizning to'plagan balingiz: {Number((parseFloat(totalScore) || 0).toFixed(1))}</h3>
+                                                    <h3 className={"font-semibold text-xl text-[#213972] lg:text-3xl"}> Sizning to'plagan balingiz: {formData.ball}</h3>
                                                     <div className="px-4">
                                                         <button
                                                             onClick={handleDownloadPDF}
