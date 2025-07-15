@@ -59,12 +59,10 @@ public class AbuturientController {
     );
 
 
-//    private final RestTemplate restTemplate = new RestTemplate();
+    //    private final RestTemplate restTemplate = new RestTemplate();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     private final Map<String, Map<String, Long>> temporaryStorage = new HashMap<>();
-
-
 
 
     private final AbuturientRepo abuturientRepo;
@@ -121,6 +119,7 @@ public class AbuturientController {
             return ResponseEntity.badRequest().body("Error saving Abuturient: " + e.getMessage());
         }
     }
+
     private boolean leadStep1(String phone, Abuturient abuturient) {
         if (phone == null || phone.isEmpty()) {
             return false;
@@ -278,7 +277,7 @@ public class AbuturientController {
             customFields.add(Map.of("field_id", 371365, "values", List.of(Map.of("value", abuturient.getAgent() != null ? abuturient.getAgent().getName() : ""))));
             customFields.add(Map.of("field_id", 371367, "values", List.of(Map.of("value", abuturient.getEducationField() != null ? abuturient.getEducationField().getName() : ""))));
             customFields.add(Map.of("field_id", 371369, "values", List.of(Map.of("value", abuturient.getAppealType() != null ? abuturient.getAppealType().getName() : ""))));
-            customFields.add(Map.of("field_id", 371371, "values", List.of(Map.of("value", abuturient.getEducationField() != null ? abuturient.getEducationField().getEducationForm().getName()+" "+abuturient.getEducationField().getEducationForm().getEducationType().getName() : ""))));
+            customFields.add(Map.of("field_id", 371371, "values", List.of(Map.of("value", abuturient.getEducationField() != null ? abuturient.getEducationField().getEducationForm().getName() + " " + abuturient.getEducationField().getEducationForm().getEducationType().getName() : ""))));
 
             contact.put("custom_fields_values", customFields);
             ResponseEntity<AmoCrmController.AmoContactResponse> contactResp = restTemplate.exchange(
@@ -320,7 +319,7 @@ public class AbuturientController {
             Map<String, Object> leadUpdate = new HashMap<>();
             leadUpdate.put("id", leadId);
             leadUpdate.put("pipeline_id", 9193022L);
-            leadUpdate.put("name", abuturient.getLastName()+" "+abuturient.getFirstName());
+            leadUpdate.put("name", abuturient.getLastName() + " " + abuturient.getFirstName());
             leadUpdate.put("status_id", 73856166L);
             restTemplate.exchange(
                     String.format("https://%s/api/v4/leads/%d", AMO_DOMAIN, leadId),
@@ -341,7 +340,7 @@ public class AbuturientController {
             customFields.add(Map.of("field_id", 371365, "values", List.of(Map.of("value", abuturient.getAgent() != null ? abuturient.getAgent().getName() : ""))));
             customFields.add(Map.of("field_id", 371367, "values", List.of(Map.of("value", abuturient.getEducationField() != null ? abuturient.getEducationField().getName() : ""))));
             customFields.add(Map.of("field_id", 371369, "values", List.of(Map.of("value", abuturient.getAppealType() != null ? abuturient.getAppealType().getName() : ""))));
-            customFields.add(Map.of("field_id", 371371, "values", List.of(Map.of("value", abuturient.getEducationField() != null ? abuturient.getEducationField().getEducationForm().getName()+" "+abuturient.getEducationField().getEducationForm().getEducationType().getName() : ""))));
+            customFields.add(Map.of("field_id", 371371, "values", List.of(Map.of("value", abuturient.getEducationField() != null ? abuturient.getEducationField().getEducationForm().getName() + " " + abuturient.getEducationField().getEducationForm().getEducationType().getName() : ""))));
             contactUpdate.put("custom_fields_values", customFields);
             restTemplate.exchange(
                     "https://" + AMO_DOMAIN + "/api/v4/contacts/" + contactId,
@@ -396,7 +395,7 @@ public class AbuturientController {
             customFields.add(Map.of("field_id", 371365, "values", List.of(Map.of("value", abuturient.getAgent() != null ? abuturient.getAgent().getName() : ""))));
             customFields.add(Map.of("field_id", 371367, "values", List.of(Map.of("value", abuturient.getEducationField() != null ? abuturient.getEducationField().getName() : ""))));
             customFields.add(Map.of("field_id", 371369, "values", List.of(Map.of("value", abuturient.getAppealType() != null ? abuturient.getAppealType().getName() : ""))));
-            customFields.add(Map.of("field_id", 371371, "values", List.of(Map.of("value", abuturient.getEducationField() != null ? abuturient.getEducationField().getEducationForm().getName()+" "+abuturient.getEducationField().getEducationForm().getEducationType().getName() : ""))));
+            customFields.add(Map.of("field_id", 371371, "values", List.of(Map.of("value", abuturient.getEducationField() != null ? abuturient.getEducationField().getEducationForm().getName() + " " + abuturient.getEducationField().getEducationForm().getEducationType().getName() : ""))));
 
             contact.put("custom_fields_values", customFields);
             ResponseEntity<AmoCrmController.AmoContactResponse> contactResp = restTemplate.exchange(
@@ -437,7 +436,7 @@ public class AbuturientController {
             Map<String, Object> leadUpdate = new HashMap<>();
             leadUpdate.put("id", leadId);
             leadUpdate.put("pipeline_id", 9193022L);
-            leadUpdate.put("name", abuturient.getLastName()+" "+abuturient.getFirstName());
+            leadUpdate.put("name", abuturient.getLastName() + " " + abuturient.getFirstName());
             leadUpdate.put("status_id", 73856170L);
             restTemplate.exchange(
                     String.format("https://%s/api/v4/leads/%d", AMO_DOMAIN, leadId),
@@ -473,9 +472,6 @@ public class AbuturientController {
         }
         return ResponseEntity.ok(abuturient);
     }
-
-
-
 
 
     @PutMapping
@@ -531,10 +527,6 @@ public class AbuturientController {
         return ResponseEntity.ok(abuturient);
 
     }
-
-
-
-
 
 
     private HttpHeaders createHeaders(String accessToken) {
@@ -801,7 +793,7 @@ public class AbuturientController {
 
             paymentCell.addElement(new Paragraph("TO'LOV UCHUN!!!", boldFont));
             if (abuturient.getPassportPin() != null) {
-                paymentCell.addElement(new Paragraph("JSHSHIR:" + abuturient.getPassportPin(), regularFont ));
+                paymentCell.addElement(new Paragraph("JSHSHIR:" + abuturient.getPassportPin(), regularFont));
             }
             paymentCell.addElement(new Paragraph("SHARTNOMA Nº K-" + abuturient.getContractNumber() + " shartnomaga asosan", regularFont));
             paymentCell.addElement(new Paragraph(fullName + "ning kontrakt puli ko'chirildi", regularFont));
@@ -1015,10 +1007,11 @@ public class AbuturientController {
             leftCell1.addElement(new Paragraph("MFO: 00873", regularFont));
             leftCell1.addElement(new Paragraph("Bank nomi: 'Asaka bank' AJ Buxoro BXM", regularFont));
             UUID specificAgentId = UUID.fromString("c595703d-7d81-4476-8f0b-d75f00cf907e");
+            LocalDateTime createdAt = abuturient.getCreatedAt();
 
-            if ((abuturient.getAgent() == null
-                    || specificAgentId.equals(abuturient.getAgent().getId()))
-                    && abuturient.getCreatedAt().toLocalDate().isAfter(LocalDate.of(2025, 7, 12))) {
+            if (createdAt != null &&
+                    (abuturient.getAgent() == null || specificAgentId.equals(abuturient.getAgent().getId())) &&
+                    createdAt.toLocalDate().isAfter(LocalDate.of(2025, 7, 12))) {
 
                 leftCell1.addElement(new Paragraph("Hisob raqami: 20208000305439719002", regularFont));
 

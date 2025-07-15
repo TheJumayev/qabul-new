@@ -247,7 +247,7 @@ function TestAbiturient() {
     };
 
     const handleDownloadPDF = async () => {
-        setLoading(true);
+        setLoading(true); // Yuklash boshlanishida loading ni true qilamiz
         try {
             const response = await fetch(`${baseUrl}/api/v1/abuturient/contract/${phone}`, {
                 method: 'GET',
@@ -275,12 +275,11 @@ function TestAbiturient() {
             link.click();
             link.remove();
             window.URL.revokeObjectURL(downloadUrl);
-            setLoading(false);
             console.log("PDF downloaded successfully");
         } catch (error) {
             console.error("Error downloading PDF:", error);
         } finally {
-            setLoading(false);
+            setLoading(false); // Yuklash tugaganda loading ni false qilamiz
         }
     };
     const [shuffledAnswers, setShuffledAnswers] = useState({});
@@ -563,15 +562,20 @@ function TestAbiturient() {
                                                     <div className="mb-2 bg-white mx-4 py-4 lg:py-10  lg:p-5 rounded-xl">
                                                         <img src={check} alt="Check" className="w-24 h-24 mx-auto mb-4" />
                                                         <h3 className={"font-semibold text-xl text-[#213972] lg:text-3xl"}> Sizning to'plagan balingiz: {formData.ball}</h3>
-                                                        <div className="px-4">
-                                                            <button
-                                                                onClick={handleDownloadPDF}
-                                                                className="w-full flex items-center mt-8 justify-between gap-2 text-[#256DF6] font-semibold border-2 border-[#256DF6] rounded-md p-2 bg-[#004CFF0D]"
-                                                            >
-                                                                <span className="text-sm lg:text-xl">Shartnoma yuklab olish</span>
-                                                                <span className="text-base lg:text-2xl"><FaDownload /></span>
-                                                            </button>
-                                                        </div>
+                                                        <button
+                                                            onClick={handleDownloadPDF}
+                                                            className="w-full flex items-center mt-8 justify-between gap-2 text-[#256DF6] font-semibold border-2 border-[#256DF6] rounded-md p-2 bg-[#004CFF0D]"
+                                                            disabled={loading}
+                                                        >
+                                                            {loading ? (
+                                                                <Loading /> // Yoki o'zingizning Loading komponentingiz
+                                                            ) : (
+                                                                <>
+                                                                    <span className="text-sm lg:text-xl">Shartnoma yuklab olish</span>
+                                                                    <span className="text-base lg:text-2xl"><FaDownload /></span>
+                                                                </>
+                                                            )}
+                                                        </button>
                                                     </div>
                                                 )}
                                                 <h3 className="text-2xl font-medium text-[#154476] lg:text-4xl my-4">Buxoro Xalqaro Universiteti manzili</h3>
@@ -658,9 +662,16 @@ function TestAbiturient() {
                                                         <button
                                                             onClick={handleDownloadPDF}
                                                             className="w-full flex items-center mt-8 justify-between gap-2 text-[#256DF6] font-semibold border-2 border-[#256DF6] rounded-md p-2 bg-[#004CFF0D]"
+                                                            disabled={loading}
                                                         >
-                                                            <span className="text-sm lg:text-xl">Shartnoma yuklab olish</span>
-                                                            <span className="text-base lg:text-2xl"><FaDownload /></span>
+                                                            {loading ? (
+                                                                <Loading /> // Yoki o'zingizning Loading komponentingiz
+                                                            ) : (
+                                                                <>
+                                                                    <span className="text-sm lg:text-xl">Shartnoma yuklab olish</span>
+                                                                    <span className="text-base lg:text-2xl"><FaDownload /></span>
+                                                                </>
+                                                            )}
                                                         </button>
                                                     </div>
                                                 </div>

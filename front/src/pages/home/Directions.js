@@ -11,7 +11,6 @@ import Loading from "./Loading";
 
 function Directions() {
   const [loading, setLoading] = useState(false);
-  const [activeField, setActiveField] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
   const phone = location.state?.phone || "";
@@ -219,7 +218,7 @@ function Directions() {
                 Ro'yxatdan o'tish
               </h2>
               <p className="text-[#737373] text-base text-center">
-                Ro'yhatdan o'tish uchun ushub ma'lumotni to'ldiring!
+                Ro'yxatdan o'tish uchun ma'lumotni to'ldiring!
               </p>
               <form onSubmit={handleSave} className="space-y-2 mt-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
@@ -292,104 +291,25 @@ function Directions() {
                       name="passportNumber"
                       value={abuturient.passportNumber}
                       onChange={handleInputChange}
-                      onFocus={() => setActiveField("passportPin")}
-                      onBlur={() => setActiveField("")}
                       className="border border-gray-300 rounded-md p-1 w-full"
+                      placeholder="AA1234567"
                     />
-
-                    {(activeField === "passportNumber" || activeField === "passportPin") && (
-                      <div className="mt-6 animate-fadeIn">
-                        <div className="mx-auto max-w-3xl bg-[#004CFF08] rounded-xl p-4 pb-2 shadow-sm border border-[#256DF6]">
-                          <h4 className="text-center text-sm font-semibold text-blue-800 mb-3">
-                            Namuna: Fuqarolik hujjatlari
-                          </h4>
-                          <div className="flex flex-col lg:flex-row gap-6 justify-center items-center">
-                            <div className="text-center">
-                              <div className="inline-block rounded-lg shadow-md border border-[#213972]">
-                                <img
-                                  src={passfront}
-                                  alt="Passport old tomoni"
-                                  className="w-full max-w-[180px] h-auto object-contain"
-                                />
-                              </div>
-                              <p className="mt-1 text-[10px] text-[#213972] font-medium">
-                                Fuqarolik pasport (old tomoni)
-                              </p>
-                            </div>
-                            <div className="text-center">
-                              <div className="inline-block rounded-lg shadow-md border border-[#213972]">
-                                <img
-                                  src={id}
-                                  alt="ID karta"
-                                  className="w-full max-w-[180px] h-auto object-contain"
-                                />
-                              </div>
-                              <p className="mt-1 text-[10px] text-[#213972] font-medium">
-                                ID karta (orqa tomoni)
-                              </p>
-                            </div>
-                          </div>
-                          <p className="text-xs text-center text-black">
-                            Passport yoki ID karta ma'lumotlarini yuqoridagi namunalarga mos ravishda kiriting
-                          </p>
-                        </div>
-                      </div>
-                    )}
-
 
                   </div>
                   {/* JSHIR */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      JSHIR
+                      JSHSHIR
                     </label>
                     <input
                       type="text"
                       name="passportPin"
                       value={abuturient.passportPin}
                       onChange={handleInputChange}
-                      onFocus={() => setActiveField("passportPin")}
-                      onBlur={() => setActiveField("")}
                       className="border border-gray-300 rounded-md p-1 w-full"
+                      placeholder="12345678901234"
                     />
-                    {(activeField === "passportNumber" || activeField === "passportPin") && (
-                      <div className="mt-6 animate-fadeIn">
-                        <div className="mx-auto max-w-3xl bg-[#004CFF08] rounded-xl p-4 pb-2 shadow-sm border border-[#256DF6]">
-                          <h4 className="text-center text-sm font-semibold text-blue-800 mb-3">
-                            Namuna: Fuqarolik hujjatlari
-                          </h4>
-                          <div className="flex flex-col lg:flex-row gap-6 justify-center items-center">
-                            <div className="text-center">
-                              <div className="inline-block rounded-lg shadow-md border border-[#213972]">
-                                <img
-                                  src={passfront}
-                                  alt="Passport old tomoni"
-                                  className="w-full max-w-[180px] h-auto object-contain"
-                                />
-                              </div>
-                              <p className="mt-1 text-[10px] text-[#213972] font-medium">
-                                Fuqarolik pasport (old tomoni)
-                              </p>
-                            </div>
-                            <div className="text-center">
-                              <div className="inline-block rounded-lg shadow-md border border-[#213972]">
-                                <img
-                                  src={id}
-                                  alt="ID karta"
-                                  className="w-full max-w-[180px] h-auto object-contain"
-                                />
-                              </div>
-                              <p className="mt-1 text-[10px] text-[#213972] font-medium">
-                                ID karta (orqa tomoni)
-                              </p>
-                            </div>
-                          </div>
-                          <p className="text-xs text-center text-black">
-                            Passport yoki ID karta ma'lumotlarini yuqoridagi namunalarga mos ravishda kiriting
-                          </p>
-                        </div>
-                      </div>
-                    )}
+
                   </div>
 
                   {/* Region */}
@@ -458,7 +378,7 @@ function Directions() {
             {/* Contact Info */}
             <div className="text-center">
               <h4 className="text-lg text-[#213972]">
-                Savollar bo'lsa bog'lanishingiz mumkin <br className="md:hidden" />
+                Murojaat uchun: <br className="md:hidden" />
                 <span className="hidden md:inline"> </span>+998 55 309 99 99
               </h4>
               <div className="flex justify-center gap-4 mt-4">

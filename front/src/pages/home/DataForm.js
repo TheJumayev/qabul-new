@@ -245,7 +245,7 @@ function DataForm() {
                 Ro'yxatdan o'tish
               </h2>
               <p className="text-[#737373] text-base text-center">
-                Ro'yhatdan o'tish uchun ushub ma'lumotni to'ldiring!
+                Ro'yxatdan o'tish uchun ma'lumotni to'ldiring!
               </p>
               <form onSubmit={handleSave} className="space-y-6">
                 <div className="grid gap-6">
@@ -359,7 +359,7 @@ function DataForm() {
             {/* Contact Info */}
             <div className="text-center">
               <h4 className="text-lg text-[#213972]">
-                Savollar bo'lsa bog'lanishingiz mumkin <br className="md:hidden" />
+                Murojaat uchun: <br className="md:hidden" />
                 <span className="hidden md:inline"> </span>+998 55 309 99 99
               </h4>
               <div className="flex justify-center gap-4 mt-4">

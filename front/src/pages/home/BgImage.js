@@ -134,19 +134,19 @@ function BgImage(props) {
               XUSH KELIBSIZ!
             </h2>
             <h2 className=" text-lg sm:text-xl md:text-2xl font-bold mb-8 text-[#213972]">
-              BUXORO XALQARO UNIVERSITETI QABUL PLATFORMASIGA
+              BUXORO XALQARO UNIVERSITETI
             </h2>
 
             {/* Login Form */}
             <div className="bg-white rounded-lg lg:max-w-[960px] max-w-[350px] mx-auto overflow-hidden pb-4">
               <div className=" pt-4">
                 <h3 className="text-xl font-semibold text-[#213972]">
-                  Assalomu aleykum!
+                  Assalomu alaykum!
                 </h3>
               </div>
               <div className="px-4">
                 <h3 className="text-base font-semibold text-[#737373]">
-                  Sahifada keltirilgan bandlarni to'ldirish bo'yicha savollar tug'ilsa, quyidagi telefon raqamiga bog'laning!<br />
+                  Sahifada keltirilgan bandlarni to'ldirish bo'yicha savollar tug'ilsa, quyidagi telefon raqamga bog'laning: +998 55 309 99 99<br />
                   Sizga omad tilaymiz!
                 </h3>
                 <form onSubmit={handleSave} className="space-y-2 md:px-20">
@@ -189,8 +189,7 @@ function BgImage(props) {
               </div>
             </div>
           </div>
-          <h4 className="hidden md:block text-center text-lg md:text-xl text-[#213972] mt-14">Savollar bo'lsa bog'lanishingiz mumkin +998 55 309 99 99</h4>
-          <h4 className="blcok md:hidden text-center text-lg md:text-xl text-[#213972] mt-14">Savollar bo'lsa bog'lanishingiz mumkin <br /> +998 55 309 99 99</h4>
+          <h4 className="hidden md:block text-center text-lg md:text-xl text-[#213972] mt-14">Murojaat uchun: +998 55 309 99 99</h4>
           <div className="flex items-center justify-center gap-4 mt-3">
             <a href="https://t.me/bxu_uz" target="_blank" rel="noopener noreferrer" className="w-6 h-6 md:w-8 md:h-8 bg-[#213972] rounded-full flex items-center justify-center text-white text-sm md:text-base">
               <FaTelegramPlane />

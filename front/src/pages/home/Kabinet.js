@@ -102,7 +102,7 @@ function Kabinet() {
               Tasdiqlash
             </h2>
             <p className='text-[#CE1126] text-xs text-center md:text-base mb-8'>
-              Eslatma: kiritilgan ma'lumotlar tog'ri ekanligini tekshiring
+              Eslatma: Kiritilgan ma'lumotlar tog'ri ekanligini tekshiring!
             </p>
           </div>
           <div>
@@ -148,7 +148,7 @@ function Kabinet() {
                   </div>
                   <div className='w-full lg:w-1/2'>
                     <p className='text-xs lg:text-base font-semibold text-[#454545] my-2 m-0'>
-                      JSHIR
+                      JSHSHIR
                     </p>
                     <p className='py-3 pl-3 w-full border border-[#D9D9D9] rounded-md text-sm font-medium lg:text-base'>
                       {abuturient.passportPin}
@@ -212,8 +212,7 @@ function Kabinet() {
             </div>
           </div>
         </div>
-        <h4 className="hidden md:block text-center text-lg md:text-xl text-[#213972] mt-14">Savollar bo'lsa bog'lanishingiz mumkin +998 55 309 99 99</h4>
-        <h4 className="blcok md:hidden text-center text-lg md:text-xl text-[#213972] mt-14">Savollar bo'lsa bog'lanishingiz mumkin <br /> +998 55 309 99 99</h4>
+        <h4 className="hidden md:block text-center text-lg md:text-xl text-[#213972] mt-14">Murojaat uchun: +998 55 309 99 99</h4>
         <div className="flex items-center justify-center gap-4 mt-3">
           <a href="https://t.me/bxu_uz" target="_blank" rel="noopener noreferrer" className="w-6 h-6 md:w-8 md:h-8 bg-[#213972] rounded-full flex items-center justify-center text-white text-sm md:text-base">
             <FaTelegramPlane />
