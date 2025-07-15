@@ -111,7 +111,7 @@ function TestAbiturient() {
                 setTotalScore(response.data?.score);
                 if (response.data?.score < 57) {
                     setFailed(true)
-                }
+                }x
             }
         } catch (error) {
             console.error("Error fetching data:", error);
