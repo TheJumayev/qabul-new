@@ -4,8 +4,10 @@ import Header from "../header/Header";
 import ApiCall, { baseUrl } from "../../config";
 import Select from "react-select";
 import { FaTelegramPlane, FaFacebookF, FaYoutube, FaInstagram, FaGlobe } from "react-icons/fa";
+import Loading from "./Loading";
 
 function DataForm() {
+  const [isLoading, setLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const phone = location.state?.phone || "";
@@ -146,6 +148,7 @@ function DataForm() {
 
   const handleSave = async (e) => {
     e.preventDefault();
+    setLoading(true);
     if (
       !abuturient.appealTypeId ||
       !abuturient.educationTypeId ||
@@ -165,10 +168,12 @@ function DataForm() {
         null,
         true
       );
-
+      setLoading(false);
       getPhoneData(response);
     } catch (error) {
       alert(error.response?.data?.message || "Xatolik yuz berdi. Ma'lumotni saqlashning iloji bo'lmadi.");
+    } finally {
+      setLoading(false);
     }
 
     navigate("/cabinet", { state: { phone: phone } });
@@ -232,6 +237,7 @@ function DataForm() {
         <Header />
       </div>
       <section className="bg-[#F6F6F6] flex-1 overflow-y-auto">
+        {isLoading && <Loading />}
         <div className="container mx-auto px-4 pt-32 flex flex-col h-full">
           <div className="">
             <div className="bg-white p-6 md:p-8 rounded-lg shadow-lg w-full max-w-4xl mx-auto">

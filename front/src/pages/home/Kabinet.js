@@ -5,9 +5,11 @@ import ApiCall from '../../config/index'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { FaTelegramPlane, FaFacebookF, FaYoutube, FaInstagram, FaGlobe } from "react-icons/fa";
+import Loading from './Loading';
 
 
 function Kabinet() {
+  const [Loading, setLoading] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const phone = location.state?.phone || "";

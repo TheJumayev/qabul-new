@@ -18,6 +18,14 @@
     </properties>
     <dependencies>
 
+
+        <dependency>
+            <groupId>org.apache.httpcomponents.client5</groupId>
+            <artifactId>httpclient5</artifactId>
+            <version>5.2.1</version> <!-- Replace with latest stable version if newer -->
+        </dependency>
+
+
         <dependency>
             <groupId>com.google.zxing</groupId>
             <artifactId>core</artifactId>

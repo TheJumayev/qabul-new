@@ -15,7 +15,10 @@ import {
     FaMapMarkerAlt,
 } from "react-icons/fa";
 
+import Loading from "./Loading";
+
 function TestAbiturient() {
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const [showTest, setShowTest] = useState(true);
     const location = useLocation();
@@ -111,7 +114,7 @@ function TestAbiturient() {
                 setTotalScore(response.data?.score);
                 if (response.data?.score < 57) {
                     setFailed(true)
-                }x
+                }
             }
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -244,6 +247,7 @@ function TestAbiturient() {
     };
 
     const handleDownloadPDF = async () => {
+        setLoading(true);
         try {
             const response = await fetch(`${baseUrl}/api/v1/abuturient/contract/${phone}`, {
                 method: 'GET',
@@ -271,10 +275,12 @@ function TestAbiturient() {
             link.click();
             link.remove();
             window.URL.revokeObjectURL(downloadUrl);
-
+            setLoading(false);
             console.log("PDF downloaded successfully");
         } catch (error) {
             console.error("Error downloading PDF:", error);
+        } finally {
+            setLoading(false);
         }
     };
     const [shuffledAnswers, setShuffledAnswers] = useState({});

@@ -6,8 +6,11 @@ import Select from "react-select";
 import passfront from "./passfront.png";
 import id from "./id.png";
 import { FaTelegramPlane, FaFacebookF, FaYoutube, FaInstagram, FaGlobe } from "react-icons/fa";
+import Loading from "./Loading";
+
 
 function Directions() {
+  const [loading, setLoading] = useState(false);
   const [activeField, setActiveField] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
@@ -106,6 +109,7 @@ function Directions() {
 
   const handleSave = async (e) => {
     e.preventDefault();
+    setLoading(true);
     if (
       !abuturient.firstName ||
       !abuturient.lastName ||
@@ -133,6 +137,8 @@ function Directions() {
       // navigate("/data-form", { state: phone });
     } catch (error) {
       alert(error.response?.data?.message || "Xatolik yuz berdi. Ma'lumotni saqlashning iloji bo'lmadi.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -205,6 +211,7 @@ function Directions() {
         <Header />
       </div>
       <section className="bg-[#F6F6F6] flex-1 overflow-y-auto">
+        {loading && <Loading />}
         <div className="container mx-auto px-4 pt-32 flex flex-col h-full">
           <div className="">
             <div className="bg-white p-6 md:p-8 rounded-lg shadow-lg w-full max-w-4xl mx-auto">

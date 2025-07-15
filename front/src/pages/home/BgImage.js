@@ -3,8 +3,10 @@ import ApiCall from "../../config";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaTelegramPlane, FaFacebookF, FaYoutube, FaInstagram, FaGlobe } from "react-icons/fa";
+import Loading from "./Loading";
 
 function BgImage(props) {
+  const [loading, setLoading] = useState(false);
   const { agentId } = useParams();
   const [open, setOpen] = useState(false);
   const [tel, setTel] = useState("");
@@ -79,6 +81,7 @@ function BgImage(props) {
 
   const handleSave = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const phoneRegex = /^\+998\d{9}$/;
     if (!phoneRegex.test(tel)) {
@@ -99,6 +102,7 @@ function BgImage(props) {
         null,
         true
       );
+
       // POST success bo‘lsa, keyin tekshiruvchi funksiya chaqiramiz
       await getPhoneData(tel);
 
@@ -112,12 +116,17 @@ function BgImage(props) {
       }
       setOpen(true);
       setSuccess(false);
+    } finally {
+      setLoading(false);
     }
+
   };
 
 
   return (
+
     <div className="bg-[#F6F6F6] h-screen">
+      {loading && <Loading />}
       <div className="flex pt-12 md:pt-28 justify-center">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
